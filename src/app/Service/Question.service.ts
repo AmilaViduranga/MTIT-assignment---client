@@ -53,7 +53,7 @@ export class QuestionService {
       id : updatedInstance.id,
       reason: updatedInstance.reason,
       userId: updatedInstance.userId,
-      doctorId: parseInt(updatedInstance.doctorId),
+      doctorId: updatedInstance.doctorId,
       status: updatedInstance.acceeptStatus,
       doctorAnswer: updatedInstance.doctorAnswer
     }).map( res => {
