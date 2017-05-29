@@ -1,0 +1,105 @@
+<app-nav-bar></app-nav-bar>
+<div class="row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <h1><i class="fa fa-users" aria-hidden="true"></i> View Users</h1>
+    <a routerLink="/adduser" class="pull-right">
+      <i class="fa fa-user-plus" aria-hidden="true"></i>
+      Add User
+    </a>
+    <table class="table table-inverse" [mfData]="users" #mf="mfDataTable" [mfRowsOnPage]="8">
+      <thead>
+      <tr>
+        <th style="width: 20%">
+          <mfDefaultSorter by="id">User Id</mfDefaultSorter>
+        </th>
+        <th style="width: 20%">
+          <mfDefaultSorter by="question">User Name</mfDefaultSorter>
+        </th>
+        <th style="width: 20%">
+          <mfDefaultSorter by="password">Login Password</mfDefaultSorter>
+        </th>
+        <th style="width: 20%">
+          <mfDefaultSorter by="type">User Type</mfDefaultSorter>
+        </th>
+        <th>
+          Option
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of mf.data">
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.password}}</td>
+        <td [ngSwitch]="user.type">
+          <span *ngSwitchCase="2" class="label label-danger">Admin</span>
+          <span *ngSwitchCase="1" class="label label-success">Doctor</span>
+          <span *ngSwitchCase="0" class="label label-primary">Patient</span>
+        </td>
+        <td>
+          <div class="row">
+            <div class="col-sm-5">
+              <button class="btn btn-link" data-toggle="modal" data-target="#myModalTwo" (click)="selectUser(user)">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </div>
+            <div class="col-sm-5" *ngIf="user.type !== 2">
+              <button class="btn btn-link" (click)="deleteUser(user.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4">
+          <mfBootstrapPaginator></mfBootstrapPaginator>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="col-sm-1"></div>
+</div>
+
+<!-- user individual edit panel -->
+<div class="modal fade" id="myModalTwo" role="dialog" *ngIf="selectedUser">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #092756; color: white;">
+        <button type="button" style="color: white;" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"> User Editable </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="userName">User Name</label>
+          <input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Enter User Name" [(ngModel)]="selectedUser.name" name="userName">
+          <small id="userNameHelp" class="form-text text-muted">Enter user name</small>
+        </div>
+        <div class="form-group">
+          <label for="userPassword">Login Password</label>
+          <input type="text" class="form-control" id="userPassword" aria-describedby="emailHelp" placeholder="Enter User Password" [(ngModel)]="selectedUser.password" name="userPassword">
+          <small id="userPasswordHelp" class="form-text text-muted">Enter the password</small>
+        </div>
+        <div class="form-group" *ngIf="selectedUser.type !== 2">
+          <label for="selectUserType">Select User Type</label>
+          <select class="form-control" id="selectUserType" [(ngModel)]="selectedUser.type">
+            <option value="1">Doctor</option>
+            <option value="0">Patient</option>
+          </select>
+          <small id="userTypedHelp" class="form-text text-muted">Select User either doctor or patient</small>
+        </div>
+        <div>
+          <button class="btn btn-success" (click)="updateUserInformation()">
+            <i class="fa fa-pencil"></i>
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

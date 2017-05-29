@@ -1,0 +1,32 @@
+<app-nav-bar></app-nav-bar>
+<div class="row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <h1><i class="fa fa-user-plus" aria-hidden="true"></i> Add User</h1>
+    <form>
+      <div class="form-group">
+        <label for="userName">User Name</label>
+        <input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Enter User Name" [(ngModel)]="name" name="name">
+        <small id="userNameHelp" class="form-text text-muted">Enter user name</small>
+      </div>
+      <div class="form-group">
+        <label for="userPassword">Login Password</label>
+        <input type="text" class="form-control" id="userPassword" aria-describedby="emailHelp" placeholder="Enter User Password" [(ngModel)]="password" name="password">
+        <small id="userPasswordHelp" class="form-text text-muted">Enter the password</small>
+      </div>
+      <div class="form-group">
+        <label for="selectUserType">Select User Type</label>
+        <select class="form-control" id="selectUserType" [(ngModel)]="type" name="type">
+          <option value="1">Doctor</option>
+          <option value="0">Patient</option>
+        </select>
+        <small id="userTypedHelp" class="form-text text-muted">Select User either doctor or patient</small>
+      </div>
+      <button type="submit" class="btn btn-primary pull-right" (click)="addNewUser()">
+        <i class="fa fa-plus"></i>
+        Submit
+      </button>
+    </form>
+  </div>
+  <div class="col-sm-1"></div>
+</div>
